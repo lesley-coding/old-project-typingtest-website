@@ -1,0 +1,106 @@
+html {
+    font-family: 'SimSun';
+    background-image: url("../image/bg.jpg");
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+/* remove the blue border in chrome*/
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
+div.index-text-wrapper {
+    width: 900px;
+    height: 400px;
+    text-align: center;
+    margin-left: 40%;
+    margin-right: 10%;
+    margin-top: 5%;
+    color: #393939;
+    position:absolute;
+}
+
+div.main-text {
+    font-size: 60px;
+    line-height: 1.5;
+}
+
+
+div.test-choose-hint {
+    font-size: 20px;
+}
+
+
+.index-text-wrapper .time-choose {
+    padding: 10px auto;
+}
+
+#default-time-unit{
+    color: white;
+    background: #4B4B4B;
+}
+
+.time-choose button {
+    font-family: 'SimSun';
+    text-align: center;
+    background: none;
+    border: 1px solid rgb(106, 106, 106);
+    /* show a hand icon when cursor points to it */
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 16px;
+    height: 60px;
+    width: 150px;
+    margin: 30px;
+}
+
+
+.time-choose button:hover {
+    color: white;
+    background: #4B4B4B;
+}
+
+#default-time-unit{
+    color: white;
+    background: #4B4B4B;
+}
+
+#test-start-btn {
+    background: none;
+    font-family: 'SimSun';
+    border: none;
+    height: 50px;
+    width: 130px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    background: #4B4B4B;
+    border-radius: 10px;
+}
+
+button:focus {
+    outline: none;
+}
+
+@media screen and (min-width: 1600px) {
+    div.index-text-wrapper {
+        margin-top: 10%;
+        margin-left: 40%;
+    }
+
+}
+
+@media screen and (min-width: 1900px) {
+    div.index-text-wrapper {
+        margin-top: 10%;
+        margin-left: 50%;
+    }
+
+}
+

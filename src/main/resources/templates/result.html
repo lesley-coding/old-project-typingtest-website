@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-TW" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>測試結果</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <link rel="stylesheet" href="../static/css/result.css" th:href="@{/css/result.css}">
+
+    <script>
+
+        $(document).ready(function () {
+           var  $testAgainBtn = $("#test-again-btn");
+           var  $returnToIndexBtn = $("#return-to-index-btn");
+
+            $returnToIndexBtn.mouseover(function () {
+                $testAgainBtn.css("color", "black");
+                $testAgainBtn.css("background", "none");
+            });
+            $testAgainBtn.mouseover(function () {
+                $testAgainBtn.css("color", "white");
+                $testAgainBtn.css("background", "#4B4B4B");
+            });
+
+            $testAgainBtn.click(function () {
+                var testTime = document.URL.toString().split("time=")[1];
+                window.location.href = "/test/page?time=" + testTime;
+            });
+
+            $returnToIndexBtn.click(function () {
+                window.location.href = "/";
+            })
+        }); // ready end
+    </script>
+
+</head>
+<body>
+<section class="result-section-wrapper">
+    <div class="cpm-acc">恭喜您完成了一個<span th:text="${param.time}">1</span>分鐘測試
+        <p>
+            <br>您的打字速度是: <!--/*@thymesVar id="result" type="com.typingtest.vo.ResultVo"*/-->
+            <span class="result-number" th:text="${result.cpm}">0</span>字/分鐘
+            <br> <!--/*@thymesVar id="result" type="com.typingtest.vo.ResultVo"*/-->
+            您的準確率是: <span class="result-number" th:text="${result.accuracy}">0</span>%
+        </p>
+    </div>
+    <p id="better-then-hint">您的打字速率超過了<!--/*@thymesVar id="percentage" type="java.lang.Double"*/-->
+   <span th:if="${percentage > 0}"><span class="result-number" th:text="${percentage}">0</span></span>%的用戶</p>
+    <!--/*@thymesVar id="percentage" type="java.lang.Integer"*/-->
+    <span id="no-user-scores-error" th:if="${percentage}==-1">抱歉，獲取其他用戶數據失敗</span>
+    </div>
+    <br>
+    <div class="return-button">
+        <button class="result-page-return-btn" id="test-again-btn">再測一次</button>
+        <button class="result-page-return-btn" id="return-to-index-btn">返回首頁</button>
+    </div>
+</section>
+
+
+</body>
+
+
+</html>

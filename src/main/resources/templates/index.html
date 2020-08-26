@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-TW" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Typing Test</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}" href="../static/css/index.css">
+    <link rel="stylesheet" th:href="@{/css/nav.css}" href="../static/css/nav.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var test_time = 1;
+            $(".time-choose button").click(function () {
+                // unclick the previously clicked time-button
+                var prev_clicked = $(".time-choose button[value=" + test_time + "]");
+                prev_clicked.css("background", "none");
+                prev_clicked.css("color", "#393939");
+
+                test_time = $(this).val();
+                $(this).css("background", "#4B4B4B");
+                $(this).css("color", "white");
+            });
+
+            $("#test-start-btn").click(function () {
+                window.location.href = "/test/page?time=" + test_time;
+            })
+
+        });
+
+    </script>
+
+</head>
+
+<body>
+<div class="nav-choose-lan">
+    <button class="choose-lan-btn">更改語言</button>
+
+    <div class="dropdown-content">
+        <a href="#">繁體中文</a>
+        <a href="#">English(US)</a>
+    </div>
+</div>
+
+<div class="index-text-wrapper">
+    <div class="main-text">幾分鐘內測試你的<br>打字速度</div>
+    <br>
+    <br>
+    <br>
+    <div class="test-choose-hint">請選擇一個測試時間單位</div>
+    <br>
+    <div class="time-choose">
+        <button id="default-time-unit" value="1">1分鐘</button>
+        <button value="3">3分鐘</button>
+        <button value="5">5分鐘</button>
+    </div>
+    <br>
+    <br>
+    <button type="submit" id="test-start-btn">開始測試</button>
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,147 @@
+html {
+    font-family: 'SimSun';
+    background-image: url("../image/bg.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* remove the blue border in chrome */
+:focus {
+    outline: none;
+}
+
+.main-test-section-wrapper {
+    margin-left: 50%;
+    margin-right: 60px;
+    margin-top: 2%;
+    text-align: left;
+    color: #393939;
+}
+
+#left-time-part {
+    text-align: left;
+    font-size: 20px;
+}
+
+#number-second-left, #number-minute-left {
+    font-size: 40px;
+}
+
+#test-text {
+    font-size: 20px;
+    line-height: 2;
+    text-align: justify;
+    word-break: break-all;
+    height: 210px;
+    overflow-y: scroll;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+#test-text::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE and Edge */
+#test-text {
+    -ms-overflow-style: none;
+}
+
+/* below code is to prevent user from directely copy the test text */
+#test-text {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently
+                                       supported by Chrome, Opera and Firefox */
+}
+
+#user-input {
+    font-size: 20px;
+    line-height: 2;
+    text-align: justify;
+    word-break: break-all;
+    height: 120px;
+    overflow-y: scroll;
+}
+
+.real-time-speed-wrapper {
+    float: left;
+    width: 125px;
+    padding-left: 30%;
+    margin-top: 330px;
+    font-size: 14px;
+    color: #393939;
+    position: relative;
+    float: left;
+}
+
+
+div.real-time-h {
+    font-size: 28px;
+    text-align: right;
+}
+
+span.real-time-number {
+    font-size: 60px;
+
+}
+
+.to-be-calculated {
+    font-size: 20px;
+}
+
+.typed {
+    background-color: #4B4B4B;
+    color: white;
+}
+
+
+.error-typed {
+    background-color: #D84040;
+    color: white;
+}
+
+
+@media screen and (max-width: 900px) {
+    .real-time-speed-wrapper {
+        padding-left: 10%;
+    }
+}
+
+@media screen and (min-width: 1500px) {
+    .real-time-speed-wrapper {
+        padding-left: 30%;
+        margin-top: 30%;
+    }
+
+    .main-test-section-wrapper {
+        margin-top: 10%;
+        width: 700px;
+        margin-left: 50%;
+    }
+}
+
+@media screen and (min-width: 1900px) {
+    .real-time-speed-wrapper {
+        padding-left: 30%;
+        margin-top: 30%;
+    }
+
+    .main-test-section-wrapper {
+        margin-top: 10%;
+        width: 700px;
+        margin-left: 55%;
+    }
+
+}
+
+
+
+
+
+

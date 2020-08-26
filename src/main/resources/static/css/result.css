@@ -1,0 +1,81 @@
+
+html {
+    font-family: 'SimSun';
+    background-image: url("../image/bg.jpg");
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.result-section-wrapper {
+    margin-left: 60%;
+    margin-right: 4%;
+    height: 530px;
+    width: 600px;
+    margin-top: 10%;
+    color: #393939;
+    position: fixed;
+    font-size: 20px;
+    line-height: 1.5;
+}
+
+button:focus {
+    outline: none;
+}
+
+.result-number {
+    font-size: 40px;
+}
+
+.return-button {
+    margin-left: -5%;
+}
+
+#no-user-scores-error {
+    font-size: 18px;
+}
+
+@media screen and (min-width: 1900px) {
+    .main-test-section-wrapper {
+        margin-top: 10%;
+        width: 700px;
+        margin-left: 55%;
+    }
+}
+
+@media screen and (min-width: 1400px) {
+    .main-test-section-wrapper {
+        margin-top: 10%;
+        width: 700px;
+        margin-left: 50%;
+    }
+
+}
+
+.result-page-return-btn {
+    font-family: 'SimSun';
+    text-align: center;
+    background: none;
+    border: 1px solid rgb(106, 106, 106);
+    /* show a hand icon when cursor point to it */
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 16px;
+    height: 50px;
+    width: 150px;
+    margin: 30px;
+}
+
+#test-again-btn {
+    color: white;
+    background: #4B4B4B;
+}
+
+.result-page-return-btn:hover {
+    color: white;
+    background: #4B4B4B;
+}
+
+
+

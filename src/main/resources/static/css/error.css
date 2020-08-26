@@ -1,0 +1,26 @@
+html {
+    font-family: 'SimSun';
+    background-image: url("../image/bg.jpg");
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#big-text{
+    font-size: 100px;
+    border-bottom: #393939 5px solid;
+
+}
+
+#error-code{
+    font-size: 50px;
+}
+
+.error-msg-container{
+    position: absolute;
+    width: 400px;
+    margin-left:60%;
+    padding-top:20%;
+    font-size: 60px;
+    color: #4B4B4B;
+}

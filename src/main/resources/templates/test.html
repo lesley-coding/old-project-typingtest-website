@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-TW" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Typing Test</title>
+    <link rel="stylesheet" th:href="@{/css/nav.css}" href="../static/css/nav.css">
+    <link rel="stylesheet" th:href="@{/css/test.css}" href="../static/css/test.css">
+    <link rel="stylesheet" th:href="@{/css/popup.css}" href="../static/css/popup.css">
+    <script type="text/javascript" src="../static/js/dict_passages_chinese.js" th:src="@{/js/dict_passages_chinese.js}"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script>
+    </script>
+    <script>
+        // get test time from parameter in url
+        var testTime = document.URL.toString().split("time=")[1];
+        if (testTime == null) {
+            testTime = 1;
+        }
+    </script>
+</head>
+
+<body>
+<div class="nav-choose-lan">
+    <button class="choose-lan-btn">更改語言</button>
+    <div class="dropdown-content">
+        <a href="#">繁體中文</a>
+        <a href="#">English(US)</a>
+    </div>
+</div>
+
+<section class="real-time-speed-wrapper">
+    <div class="real-time-h">速度</div>
+    <span class="real-time-number" id="cpm"><span class="to-be-calculated">待計算</span></span>字/每分鐘
+    <br>
+    <br>
+    <br>
+    <div class="real-time-h">準確率</div>
+    <span class="real-time-number" id="acc"><span class="to-be-calculated">待計算</span> </span>%
+</section>
+
+<section class="main-test-section-wrapper">
+    <div id="left-time-part">剩餘時間：
+        <span id="number-minute-left"> </span> 分 <span id="number-second-left">60</span> 秒
+    </div>
+    <br>
+    <br>
+    <div>在下方光標處敲入下文第一個文字以開始打字測試，可按退格鍵修改錯誤文字，刷新以更換文章</div>
+    <br>
+    <p id="test-text">
+        東京也無非是這樣。上野的櫻花爛熳的時節，望去确也象緋紅的輕云，但花下也缺不了成群結隊的“清國留學生”的速成班，頭頂上盤著大辮子，頂得學生制帽的頂上高高聳起，形成一座富士山。也有解散辮子，盤得平的，除下帽來，油光可鑒，宛如小姑娘的發髻一般，還要將脖子扭几扭。實在標致极了。中國留學生會館的門房里有几本書買，有時還值得去一轉；倘在上午，里面的几間洋房里倒也還可以坐坐的。但到傍晚，有一間的地板便常不免要咚咚咚地響得震天，兼以滿房煙塵斗亂；問問精通時事的人，答道，“那是在學跳舞。”到別的地方去看看，如何呢？我就往仙台的醫學專門學校去。從東京出發，不久便到一處驛
+    </p>
+
+    <div class="popup">請注意您的正確率</div>
+    <p id="user-input" contenteditable="true" onkeydown="testStart()"></p>
+</section>
+
+</body>
+
+<script type="text/javascript">
+
+    var ele_secondLeft = document.getElementById("number-second-left");
+    var ele_minuteLeft = document.getElementById("number-minute-left");
+
+    ele_minuteLeft.innerText = testTime;
+    ele_secondLeft.innerHTML = "0";
+    var s = 0;
+    var m = testTime;
+
+    var startTimeStamp;
+
+    var ele_userInput = document.getElementById("user-input");
+    var ele_testText = document.getElementById("test-text");
+    var ele_cpm = document.getElementById("cpm");
+    var ele_acc = document.getElementById("acc");
+
+    showPassage();
+
+    function showPassage() {
+        var totalNumPassage = passages_ch.length;
+        var randomPIndex= Math.floor(Math.random() * totalNumPassage);
+        var currentsPsg = passages_ch[randomPIndex].content;
+        ele_testText.innerText = currentsPsg + currentsPsg;
+    }
+
+    ele_userInput.focus();
+
+    function testStart() {
+        startTimer();
+        startTimeStamp = new Date().getTime();
+        // only start timer when user typed for the first time; 
+        ele_userInput.onkeydown = null;
+    }
+
+    function startTimer() {
+        if (m === 0 && s === 0) {
+            stopTyping();
+            skipToResult();
+        } else {
+            if (s === 0) {
+                s = 60;
+                m = m - 1;
+            }
+            s = s - 1;
+            ele_secondLeft.innerText = s;
+            ele_minuteLeft.innerText = m;
+            setTimeout(startTimer, 1000);
+        }
+    }
+
+
+    function stopTyping() {
+        ele_userInput.setAttribute("contenteditable", "false");
+    }
+
+    var realTimeCpm = 0;
+    var realTimeAc = 0;
+    var pointer_input = 0;
+    var countRightChar = 0;
+    var countErrorChar = 0;
+
+    var inMiddleOfTyping = false;
+    //  use  compositionend  to ensure user has typed the full Chinese character
+    ele_userInput.addEventListener('compositionend', function (ev) {
+        inMiddleOfTyping = false;
+        checkInput();
+    }, false);
+
+    ele_userInput.addEventListener('input', function (ev) {
+        if (!inMiddleOfTyping) {
+            checkInput();
+        }
+    }, false);
+
+    ele_userInput.addEventListener('compositionstart', function (ev) {
+        inMiddleOfTyping = true;
+        // checkInput();
+    }, false);
+
+    // when user typed backspace , the char count won't change, the pointer will change
+    $(document).on("keyup", "#user-input", function (ev) {
+        if (ev.keyCode === 8 || ev.which === 8) {
+            pointer_input = ele_userInput.innerText.length;
+            checkInput();
+        }
+    });
+    // ## preven cheating 
+    //  disable 'paste';
+    ele_userInput.addEventListener('paste', function (ev) {
+        ev.preventDefault();
+    }, false);
+
+    // keep cursor at the end of the user input text 
+    ele_userInput.addEventListener('keydown', function (ev) {
+        // disable <- and -> key
+        if (ev.keyCode === 37 || ev.which === 37 ||
+            ev.keyCode === 39 || ev.which === 29) {
+            ev.preventDefault();
+        }
+    });
+    // prevent user from moving the I-cursor
+    ele_userInput.addEventListener('mousedown', function (ev) {
+        ev.preventDefault();
+    });
+
+    var popupShowed = false;
+
+    // ## core function  
+    function checkInput() {
+        var userText = ele_userInput.innerText;
+        var text = ele_testText.innerText;
+
+        var checked = "";
+        var tmpText = "";
+
+        // ensure that if user deleted all of  typed text, the original text would remove its css style.
+        if (userText === "") {
+            ele_testText.innerHTML = "" + text[0] + text.substr(1);
+            pointer_input = 0;
+            return;
+        }
+
+        for (i in userText) {
+            if (userText[i] === text[i]) {
+                if (i >= pointer_input) {
+                    countRightChar++;
+                }
+                checked += text[i];
+            } else {
+                if (i >= pointer_input) {
+                    countErrorChar++;
+                }
+                checked += "<span class='error-typed'>" + text[i] + "</span>";
+            }
+            tmpText = "<span class='typed'>" + checked + "</span>" + text.substr(++i);
+            updateRealTimeResult();
+        }
+        if (tmpText != "") {
+            ele_testText.innerHTML = tmpText;
+        }
+        // the user may input a whole word instead of one char at a time
+        pointer_input = userText.length;
+        scrollTestText();
+    }
+
+    // scroll the test text when needed
+    function scrollTestText() {
+        ele_testText.scrollTop = ele_userInput.scrollHeight - ele_userInput.clientHeight;
+    }
+
+    function updateRealTimeResult() {
+        realTimeCpm = Math.round((countRightChar + countErrorChar) / (new Date().getTime() - startTimeStamp) * 60 * 1000);
+        ele_cpm.innerText = realTimeCpm;
+
+        realTimeAc = Math.round(countRightChar / (countRightChar + countErrorChar) * 100);
+        ele_acc.innerText = realTimeAc;
+        
+        // when user accuracy is too low ,show popup
+        if (ele_userInput.innerText.length >= 10 && realTimeAc < 40) {
+            if (!popupShowed) {
+                showPopups();
+                popupShowed = true;
+            }
+        } else {
+            removePopups();
+            popupShowed = false;
+        }
+    }
+
+    function showPopups() {
+        var ele_popup = document.getElementsByClassName("popup")[0];
+        ele_popup.classList.toggle("show");
+
+    }
+
+    function removePopups() {
+        var ele_popup = document.getElementsByClassName("popup")[0];
+        ele_popup.classList.remove("show");
+    }
+
+    function skipToResult() {
+        var finalCpm = ele_cpm.innerText.trim();
+        var finalAcc = ele_acc.innerText.trim();
+        var resultUrl = "/show/test/result/" + finalCpm + "/" + finalAcc + "/" + 1;
+        window.location.href = resultUrl;
+    }
+</script>
+
+</html>
