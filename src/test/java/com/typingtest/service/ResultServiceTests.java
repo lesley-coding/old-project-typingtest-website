@@ -37,7 +37,7 @@ public class ResultServiceTests {
 
         this.resultService.saveResult(result);
         assertThat(resultService.getAllScores().size()).isEqualTo(found + 1);
-//        assertThat(resultService.getAllScores().size()).isEqualTo(found); // when insert an invalid scores;
+//        assertThat(resultService.getAllScores().size()).isEqualTo(found); // when insert an invalid score;
         assertThat(result.getId()).isNotNull();
     }
 
