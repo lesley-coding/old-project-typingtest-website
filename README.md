@@ -1,7 +1,7 @@
 # Spring Boot Typing Test Application
  This is a web application built with Maven. Users could test their test speed and accuracy in 1 or 3 or 5 minutes.
  
- Front-end is mainly built with javascript, test results would be submitted to the back-end(built with Java) and would be stored in Mysql database.
+ Test results would be submitted to the back-end(built with Java) and would be stored in Mysql database.
  
 *Webpages in this application only have <code>traditional Chinese</code> version for the time being.*
 
